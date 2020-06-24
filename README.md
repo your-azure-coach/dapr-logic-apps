@@ -1,5 +1,3 @@
-#Run Dapr workflows with Logic Apps
-
 This repo contains the technical instructions to complete an end-to-end scenario for running Logic Apps within the Dapr runtime.  More information can be found on this blog.
 
 ## Setup your environment
@@ -14,10 +12,10 @@ This repo contains the technical instructions to complete an end-to-end scenario
 dapr init --kubernetes
 ```
 
-* Clone this repo !!!TODO111
+* Clone this repo
 
 ```
-git clone TODO
+git clone https://github.com/your-azure-coach/dapr-logic-apps.git
 ```
 
 * Install the [REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) for Visual Studio Code
