@@ -1,0 +1,17 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: customer-store
+spec:
+  type: state.azure.tablestorage
+  metadata:
+  - name: accountName
+    secretKeyRef:
+      name: dapr-workflows
+      key: accountName
+  - name: accountKey
+    secretKeyRef:
+      name: dapr-workflows
+      key: accountKey
+  - name: tableName
+    value: customers

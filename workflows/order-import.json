@@ -1,0 +1,99 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Extract_BE_orders": {
+                "inputs": {
+                    "from": "@triggerBody()",
+                    "where": "@equals(item().country, 'BE')"
+                },
+                "runAfter": {
+                    "Response": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Query"
+            },
+            "For_each_BE_order": {
+                "actions": {
+                    "Add_customer_ERP_id_to_order": {
+                        "inputs": "@addProperty(item(), 'customerId', body('Get_customer_from_State_Store').erpId)",
+                        "runAfter": {
+                            "Get_customer_from_State_Store": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Compose"
+                    },
+                    "Convert_order_to_CSV": {
+                        "inputs": {
+                            "format": "CSV",
+                            "from": "@createArray(outputs('Add_customer_ERP_id_to_order'))"
+                        },
+                        "runAfter": {
+                            "Add_customer_ERP_id_to_order": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Table"
+                    },
+                    "Get_customer_from_State_Store": {
+                        "inputs": {
+                            "method": "GET",
+                            "uri": "@{concat('http://localhost:3500/v1.0/state/customer-store/', item().customerCode)}"
+                        },
+                        "runAfter": {},
+                        "type": "Http"
+                    },
+                    "Sent_CSV_order_to_ERP_via_Output_Binding": {
+                        "inputs": {
+                            "body": {
+                                "data": "@{body('Convert_order_to_CSV')}",
+                                "metadata": {
+                                    "blobName": "@{concat('order_', guid(), '.csv')}"
+                                },
+                                "operation": "create"
+                            },
+                            "method": "POST",
+                            "uri": "http://localhost:3500/v1.0/bindings/erp-orders"
+                        },
+                        "runAfter": {
+                            "Convert_order_to_CSV": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Http"
+                    }
+                },
+                "foreach": "@body('Extract_BE_orders')",
+                "runAfter": {
+                    "Extract_BE_orders": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "Response": {
+                "inputs": {
+                    "body": "Thanks you for your order!",
+                    "statusCode": 200
+                },
+                "kind": "Http",
+                "runAfter": {},
+                "type": "Response"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {},
+        "triggers": {
+            "manual": {
+                "inputs": {
+                    "schema": {}
+                },
+                "kind": "Http",
+                "type": "Request"
+            }
+        }
+    }
+}

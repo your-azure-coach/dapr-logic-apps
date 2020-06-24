@@ -1,0 +1,17 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: erp-orders
+spec:
+  type: bindings.azure.blobstorage
+  metadata:
+  - name: storageAccount
+    secretKeyRef:
+      name: dapr-workflows
+      key: accountName
+  - name: storageAccessKey
+    secretKeyRef:
+      name: dapr-workflows
+      key: accountKey
+  - name: container
+    value: erporders

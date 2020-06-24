@@ -1,0 +1,30 @@
+### Invoke the order import Logic App
+POST http://localhost:3500/v1.0/invoke/workflows/method/order-import
+Content-Type: application/json
+
+[
+    {
+        "country" : "BE",
+        "customerCode" : "CUST001",
+        "productCode" : "PROD001",
+        "quantity" : 4
+    },
+    {
+        "country" : "NL",
+        "customerCode" : "CUST002",
+        "productCode" : "PROD001",
+        "quantity" : 4
+    },
+    {
+        "country" : "FR",
+        "customerCode" : "CUST001",
+        "productCode" : "PROD002",
+        "quantity" : 4
+    },
+    {
+        "country" : "BE",
+        "customerCode" : "CUST002",
+        "productCode" : "PROD002",
+        "quantity" : 4
+    }
+]

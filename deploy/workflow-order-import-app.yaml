@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workflow-order-import-app
+  labels:
+    app: workflow-order-import-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workflow-order-import-app
+  template:
+    metadata:
+      labels:
+        app: workflow-order-import-app
+      annotations:
+        dapr.io/id: "workflows"
+        dapr.io/enabled: "true"
+        dapr.io/port: "50003"
+        dapr.io/protocol: "grpc"
+    spec:
+      containers:
+      - name: host
+        image: daprio/workflows:0.2.1
+        env:
+        - name: STORAGE_ACCOUNT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dapr-workflows
+              key: accountKey
+        - name: STORAGE_ACCOUNT_NAME
+          valueFrom:
+            secretKeyRef:
+              name: dapr-workflows
+              key: accountName
+        command: ["dotnet"]
+        args: ["app/Dapr.Workflows.dll", "--workflows-path", "/workflows"]
+        ports:
+        - containerPort: 50003
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: workflows
+          mountPath: /workflows
+      volumes:
+        - name: workflows
+          configMap:
+            name: workflow-order-import-config

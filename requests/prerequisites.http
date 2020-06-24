@@ -1,0 +1,30 @@
+### Update the customer state store with required values
+POST http://localhost:3500/v1.0/state/customer-store
+Content-Type: application/json
+
+[
+    {
+        "key": "CUST001",
+        "value": {
+            "id": "CUST001",
+            "name": "Contoso",
+            "erpId": "CONTOSO-INC"
+        }
+    },
+    {
+        "key": "CUST002",
+        "value": {
+            "id" : "CUST002",
+            "name" : "Northwind Belgium",
+            "erpId" : "NORTHWIND-BE"
+        }
+    }
+]
+
+
+### Validate if the customer state store is updated correctly
+GET http://localhost:3500/v1.0/state/customer-store/CUST001
+
+
+### Validate if the customer state store is updated correctly
+GET http://localhost:3500/v1.0/state/customer-store/CUST002
