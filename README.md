@@ -66,6 +66,8 @@ set STORAGE_ACCOUNT_KEY=<YOUR_STORAGE_ACCOUNT_KEY>
 kubectl create secret generic dapr-workflows --from-literal=accountName=%STORAGE_ACCOUNT_NAME% --from-literal=accountKey=%STORAGE_ACCOUNT_KEY%
 ```
 
+> :warning: for production usage, I highly recommend to use a secret store like Azure Key Vault
+
 * Create a Kubernetes Config Map to store the Logic Apps workflow definition
 
 ```
