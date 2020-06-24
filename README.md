@@ -138,6 +138,12 @@ kubectl delete component customer-store
 kubectl delete configmap workflow-order-import-config
 ```
 
+* Delete Kubernetes secrets
+
+```
+kubectl delete secret dapr-workflows
+```
+
 * Delete all Azure resources
 
 ```
