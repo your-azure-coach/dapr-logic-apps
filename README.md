@@ -40,7 +40,7 @@ az group create --name dapr-logic-apps --location westeurope
 set STORAGE_ACCOUNT_NAME=<YOUR_UNIQUE_STORAGE_ACCOUNT_NAME>
 ```
 
-* Create an Azure storage account
+* Create an Azure storage account.  This will be used for persisting the Logic Apps internal state and also as a state store and output binding.
 
 ```
 az storage account create --name %STORAGE_ACCOUNT_NAME% --resource-group dapr-logic-apps
@@ -92,6 +92,10 @@ kubectl apply -f deploy/workflow-order-import-app.yaml
 
 * Wait until the deployment finished successfully
 
+```
+kubectl get deployment workflow-order-import-app
+```
+
 * Setup port forwarding, so we can easily test
 
 ```
@@ -107,3 +111,35 @@ kubectl port-forward deploy/workflow-order-import-app 3500:3500
 * As a result, you should see two CSV orders appearing in the `erp-orders` Blob Storage container.
 
 ![](docs/.media/erp-orders-csv.png)
+
+## Clean-up resources
+
+* Delete Kubernetes deployment
+
+```
+kubectl delete deployment workflow-order-import-app
+```
+
+* Delete the `erp-orders` output binding to Azure Blob Storage
+
+```
+kubectl delete component erp-orders
+```
+
+* Delete the `customer-store` state store on Azure Table Storage
+
+```
+kubectl delete component customer-store
+```
+
+* Delete the config map that holds the Logic Apps definition
+
+```
+kubectl delete configmap workflow-order-import-config
+```
+
+* Delete all Azure resources
+
+```
+az group delete --name dapr-logic-apps --yes
+```
