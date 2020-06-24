@@ -2,6 +2,8 @@ This repo contains the technical instructions to complete an end-to-end scenario
 
 ## Setup your environment
 
+* Install the [REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) for Visual Studio Code
+
 * Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
 
 * Install the [Dapr CLI](https://github.com/dapr/cli#getting-started)
@@ -17,8 +19,6 @@ dapr init --kubernetes
 ```
 git clone https://github.com/your-azure-coach/dapr-logic-apps.git
 ```
-
-* Install the [REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) for Visual Studio Code
 
 ## Create Azure resources
 
