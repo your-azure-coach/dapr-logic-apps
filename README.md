@@ -8,10 +8,10 @@ This repo contains the technical instructions to complete an end-to-end scenario
 
 * Install the [Dapr CLI](https://github.com/dapr/cli#getting-started)
 
-* Install the latest Dapr runtime to get started.
+* Install version 0.8.0 of the Dapr runtime to get started.
 
 ```
-dapr init --kubernetes
+dapr init --kubernetes --runtime-version 0.8.0
 ```
 
 * Clone this repo
@@ -60,13 +60,13 @@ set STORAGE_ACCOUNT_KEY=<YOUR_STORAGE_ACCOUNT_KEY>
 
 ## Configure Dapr workflows on your Kubernetes cluster
 
-* Create a secret for the Azure storage account credentails
+* Create a secret for the Azure storage account credentials
+
+> :warning: for production usage, I highly recommend to use a secret store like Azure Key Vault
 
 ```
 kubectl create secret generic dapr-workflows --from-literal=accountName=%STORAGE_ACCOUNT_NAME% --from-literal=accountKey=%STORAGE_ACCOUNT_KEY%
 ```
-
-> :warning: for production usage, I highly recommend to use a secret store like Azure Key Vault
 
 * Create a Kubernetes Config Map to store the Logic Apps workflow definition
 
