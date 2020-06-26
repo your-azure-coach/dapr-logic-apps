@@ -1,4 +1,4 @@
-This repo contains the technical instructions to complete an end-to-end scenario for running Logic Apps within the Dapr runtime.  More information can be found on this blog.
+This repo contains the technical instructions to complete an end-to-end scenario for running Logic Apps within the Dapr runtime.  More information can be found on this [blog](https://yourazurecoach.com/exploring-dapr-workflows-with-logic-apps/).
 
 ## Setup your environment
 
